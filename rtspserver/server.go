@@ -152,10 +152,17 @@ func (s *RTSPServer) lookupServerMediaSession(streamName string) *livemedia.Serv
 	}
 	defer fid.Close()
 
-	if !existed {
-		sms = s.createNewSMS(streamName)
-		s.addServerMediaSession(sms)
+	if existed {
+		return sms
 	}
+
+	sms = s.createNewSMS(streamName)
+	if sms == nil {
+		_log.DBG("create SMS failed!\n")
+		return nil
+	}
+
+	s.addServerMediaSession(sms)
 
 	return sms
 }
@@ -206,13 +213,17 @@ func (s *RTSPServer) createNewSMS(fileName string) (sms *livemedia.ServerMediaSe
 		sms = livemedia.NewServerMediaSession("H.264 Video", fileName)
 		// allow for some possibly large H.264 frames
 		livemedia.OutPacketBufferMaxSize = 2000000
+
 		sms.AddSubsession(livemedia.NewH264FileMediaSubsession(fileName))
 	case "ts":
 		//indexFileName := fmt.Sprintf("%sx", fileName)
 		sms = livemedia.NewServerMediaSession("MPEG Transport Stream", fileName)
+
 		sms.AddSubsession(livemedia.NewM2TSFileMediaSubsession(fileName))
 	default:
+		_log.DBG("unknown file name extension: %s\n", extension)
 	}
+
 	return
 }
 

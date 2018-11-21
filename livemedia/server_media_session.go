@@ -96,6 +96,7 @@ func (s *ServerMediaSession) StreamName() string {
 func (s *ServerMediaSession) AddSubsession(subsession IServerMediaSubsession) {
 	s.Subsessions[s.SubsessionCounter] = subsession
 	s.SubsessionCounter++
+
 	subsession.setParentSession(s)
 	subsession.IncrTrackNumber()
 }

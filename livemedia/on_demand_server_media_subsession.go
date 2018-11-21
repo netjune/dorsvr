@@ -62,9 +62,9 @@ func (s *OnDemandServerMediaSubsession) GetStreamParameters(tcpSocketNum net.Con
 
 	if s.lastStreamToken != nil {
 		streamState := s.lastStreamToken
+
 		sp.ServerRTPPort = streamState.ServerRTPPort()
 		sp.ServerRTCPPort = streamState.ServerRTCPPort()
-
 		sp.StreamToken = s.lastStreamToken
 	} else {
 		mediaSource := s.isubsession.createNewStreamSource()
@@ -175,8 +175,9 @@ func (s *OnDemandServerMediaSubsession) CNAME() string {
 	return s.cname
 }
 
-func (s *OnDemandServerMediaSubsession) StartStream(clientSessionID string, streamState *StreamState,
-	rtcpRRHandler, serverRequestAlternativeByteHandler interface{}) (rtpSeqNum, rtpTimestamp uint32) {
+func (s *OnDemandServerMediaSubsession) StartStream(clientSessionID string,
+		streamState *StreamState,
+		rtcpRRHandler, serverRequestAlternativeByteHandler interface{}) (rtpSeqNum, rtpTimestamp uint32) {
 	destinations, _ := s.destinations[clientSessionID]
 	go streamState.startPlaying(destinations, rtcpRRHandler, serverRequestAlternativeByteHandler)
 

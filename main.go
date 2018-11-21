@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
+	ww "zz/lib/common"
 
 	//"github.com/djwackey/dorsvr/auth"
 	"github.com/djwackey/dorsvr/rtspserver"
 	"github.com/djwackey/gitea/log"
 )
+
+var _log = ww.NewLogger("DEBUG", ww.Log_Level_DEBUG)
 
 func main() {
 	// open a logger writer of console or file mode.
