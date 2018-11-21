@@ -154,6 +154,8 @@ func (r *RTCPInstance) incomingReportHandler() {
 			break
 		}
 
+		_log.DBG("rtcp: read %d bytes\n", readBytes)
+
 		packetSize := uint(readBytes)
 
 		r.processIncomingReport(packetSize)

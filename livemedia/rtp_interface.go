@@ -75,6 +75,8 @@ func (i *RTPInterface) delStreamSocket(socketNum net.Conn, streamChannelID uint)
 
 // normal case: send as a UDP packet, also, send over each of our TCP sockets
 func (i *RTPInterface) sendPacket(packet []byte, packetSize uint) bool {
+	_log.DBG("send %d bytes\n", packetSize)
+
 	success := i.gs.Output(packet, packetSize)
 
 	var streams *tcpStreamRecord
