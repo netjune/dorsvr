@@ -4,6 +4,8 @@ import (
 	sys "syscall"
 	"time"
 
+	ww "zz/lib/common"
+
 	gs "github.com/djwackey/dorsvr/groupsock"
 	"github.com/djwackey/gitea/log"
 )
@@ -35,6 +37,8 @@ const (
 	PACKET_RTCP_REPORT  = 2
 	PACKET_BYE          = 3
 )
+
+var _log = ww.NewLogger("livemedia", ww.Log_Level_DEBUG)
 
 type SDESItem struct {
 	data []byte
